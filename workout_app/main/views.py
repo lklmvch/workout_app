@@ -11,5 +11,5 @@ def about(request):
     return render(request, 'main/about.html')
 
 
-# def plans(request):
-#     return HttpResponse('<ul><li>First plan</li><li>Second plan</li><li>Third plan</li></ul>')
+def plans(request):
+    return HttpResponse('<ul><li>First plan</li><li>Second plan</li><li>Third plan</li></ul>')
