@@ -1,9 +1,11 @@
 from rest_framework import serializers
 
-from workout_app.blog.models import Articles
+from .models import Articles
 
 
 class ArticlesSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Articles
-        fields = ('title', 'intro', 'text')
+        fields = "__all__"
+

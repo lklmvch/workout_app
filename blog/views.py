@@ -1,9 +1,61 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import DetailView, CreateView
+from rest_framework import generics, viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-from .models import Articles
 from .forms import ArticlesForm
+from .models import Articles
+from .serializers import ArticlesSerializer
+
+class ArticlesViewSet(viewsets.ModelViewSet):
+    queryset = Articles.objects.all()
+    serializer_class = ArticlesSerializer
+
+
+# class ArticlesListView(generics.ListCreateAPIView):
+#     queryset = Articles.objects.all()
+#     serializer_class = ArticlesSerializer
+#
+# class ArticlesUpdateView(generics.UpdateAPIView):
+#     queryset = Articles.objects.all()
+#     serializer_class = ArticlesSerializer
+#
+#
+# class ArticlesDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Articles.objects.all()
+#     serializer_class = ArticlesSerializer
+
+
+
+
+
+# class ArticlesAPIView(APIView):
+#     def get(self, request):
+#         w = Articles.objects.all()
+#         return Response({'posts': ArticlesSerializer(w, many=True).data})
+#
+#     def post(self, request):
+#         serializer = ArticlesSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response({'posts': serializer.data})
+#
+#     def put(self, request, *args, **kwargs):
+#         pk = kwargs.get('pk', None)
+#         if not pk:
+#             return Response({'error': 'Method PUT not allowed'})
+#         try:
+#             instance = Articles.objects.get('pk')
+#         except:
+#             return Response({'error': 'Object does not exist'})
+#
+#         serializer = ArticlesSerializer(data = request.data, instance=instance)
+#         serializer.is_valid()
+#         serializer.save()
+#
+#         return Response({'posts': serializer.data})
 
 
 def blog(request):
