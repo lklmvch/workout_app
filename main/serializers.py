@@ -28,6 +28,7 @@ class RegistrationSerializer(serializers.Serializer):
 
     # Field-level validation for email is already handled by EmailField
     # We will add custom validation for the phone_number field
+    # course = serializers.SlugRelatedField(slug_field='name', read_only=True)
 
     course = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all())
     class Meta:
@@ -40,7 +41,6 @@ class RegistrationSerializer(serializers.Serializer):
             raise serializers.ValidationError("Phone number must start with +375 and contain exactly 9 digits.")
         return value
 
-    # Object-level validation could also be done here if necessary (optional)
 
     def validate_course_id(self, value):
         # Validate that course exists
@@ -62,4 +62,3 @@ class RegistrationSerializer(serializers.Serializer):
         return registration
 
 
-  # Include fields you want to display

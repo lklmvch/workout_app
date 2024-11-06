@@ -1,17 +1,14 @@
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView
 
-from .forms import LoginUserForm, UserRegistrationForm
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from .serializers import UserRegistrationSerializer
+
+import random
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+# from workout_app.tasks import send_confirmation_email
+
 
 class LoginUser(LoginView):
     form_class = AuthenticationForm
@@ -24,6 +21,11 @@ class UserRegistrationView(APIView):
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
+            # # Generate a random confirmation code
+            # confirmation_code = str(random.randint(100000, 999999))
+            #
+            # # Send the confirmation email asynchronously
+            # send_confirmation_email.delay(user.email, confirmation_code)
             return Response({'message': 'User registered successfully!'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

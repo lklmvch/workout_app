@@ -2,11 +2,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.views.generic import CreateView
-from rest_framework import generics, viewsets, status
+from rest_framework import generics, viewsets, status, serializers
 from rest_framework.decorators import action
 
 from .forms import UserContactsForm, ImageForm
-from .models import Image, Registration, Course, UserContacts
+from .models import Image, Registration, Course
 from .serializers import ImageSerializer, RegistrationSerializer, CourseSerializer
 
 from rest_framework.response import Response

@@ -9,7 +9,7 @@ from .views import RegisterForClassView
 
 router = routers.SimpleRouter()
 router.register(r'media', MediaViewSet)
-router.register(r'course', CourseViewSet)
+router.register(r'class', CourseViewSet)
 
 
 urlpatterns = [

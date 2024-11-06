@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
 from django.views.generic import DetailView, CreateView
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
@@ -95,4 +96,10 @@ class AddArticle(CreateView):
         w = form.save(commit=False)
         w.author = self.request.user
         return super().form_valid(form)
+
+
+
+
+
+
 
