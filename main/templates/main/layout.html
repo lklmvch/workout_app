@@ -38,7 +38,7 @@
                 {% if user.is_authenticated %}
                     <li class="last" style="color:White">{{ user.username}}<a href="{% url 'users:logout' %}">|  Log Out</a></li>
                 {% else %}
-                    <li class="last"><a href="{% url 'users:user-registration' %}">Sign Up</a><a href="{% url 'users:login' %}">Log In</a></li>
+                    <li class="last"><a href="{% url 'users:sign-up' %}">Sign Up</a><a href="{% url 'users:login' %}">Log In</a></li>
                 {% endif %}
             </div>
             <div class="container">

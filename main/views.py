@@ -1,13 +1,17 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render
-from django.views.generic import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+from django.views import View
+from django.views.generic import CreateView, ListView, DetailView
 from rest_framework import generics, viewsets, status, serializers
 from rest_framework.decorators import action
 
-from .forms import UserContactsForm, ImageForm
-from .models import Image, Registration, Course
-from .serializers import ImageSerializer, RegistrationSerializer, CourseSerializer
+from .forms import UserContactsForm, ImageForm, CourseRegistrationForm
+from .models import Image, Course, Registration
+from .serializers import ImageSerializer, CourseSerializer, RegistrationSerializer
 
 from rest_framework.response import Response
 from .permissions import IsTrainer
@@ -81,6 +85,7 @@ def gallery_upload(request):
 
 
 class RegisterForClassView(generics.CreateAPIView):
+
     serializer_class = RegistrationSerializer
 
     def create(self, request, *args, **kwargs):
@@ -89,6 +94,33 @@ class RegisterForClassView(generics.CreateAPIView):
             registration = serializer.save()
             return Response({"message": "Registration successful!", "registration_id": registration.id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CourseRegistrationFormView(LoginRequiredMixin, CreateView):
+    model = Course
+    form_class = CourseRegistrationForm
+    template_name = 'course_registration.html'
+
+    def form_valid(self, form):
+        # Add the current user to the course (many-to-many relationship)
+        course = form.save()
+        course.users.add(self.request.user)  # Add the logged-in user to the course
+
+        return redirect(reverse('schedule'))
+    # def get(self, request, course_id):
+    #     # Render the HTML form template
+    #     form = CourseRegistrationForm()
+    #     course = get_object_or_404(Course, id=course_id)
+    #     return render(request, 'course_registration.html', {'form': form, 'course_name': course.name, 'course_id': course_id})
+    #
+    # def post(self, request, course_id):
+    #     form = CourseRegistrationForm(request.POST)
+    #     if form.is_valid():
+    #         # Process the registration form and save the registration
+    #         form.save()  # Assuming your form's save() handles course assignment
+    #         return JsonResponse({"message": "Registration successful!"})
+    #     return JsonResponse(form.errors, status=400)
+
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all().order_by('name')
@@ -106,24 +138,28 @@ class CourseViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)  # Return serialized data
 
 
+class CourseMembersView(DetailView):
+    model = Course
+    template_name = 'main/course_members.html'
+    context_object_name = 'members'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Use self.get_object() or self.object to access the course instance
+        # context['members'] = Registration.objects.filter(course=self.object())
+        context['members'] = self.object.registrations.all()
+        return context
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['members'] = Registration.objects.filter(course=self.object)  # Assuming 'user' is the related name of the ForeignKey/ManyToManyField
+    #     return context
+
+    # def get_queryset(self):
+    #     course_id = self.kwargs['course_id']
+    #     course = get_object_or_404(Course, id=course_id)
+    #     return course.user.all()
 
 
-
-
-
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserRegistrationForm(request.POST)
-#         if form.is_valid():
-#             # Create a new user object but avoid saving it yet
-#             user = form.save(commit=False)
-#             # Set the chosen password
-#             user.set_password(form.cleaned_data['password'])
-#             # Save the User object
-#             user.save()
-#             return render(request, 'main/index.html', {'new_user': user})
-#     else:
-#         form = UserRegistrationForm()
-#     return render(request, 'main/register.html', {'user_form': form})
 
 

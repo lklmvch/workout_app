@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'drf_yasg',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -85,15 +86,14 @@ WSGI_APPLICATION = 'workout_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'MySql',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'workout_database',
         'USER': 'root',
-        'PASSWORD': 'admin12345678',
+        'PASSWORD': 'root12345',
         'HOST': 'db',
-        'PORT': '3306',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -160,5 +160,19 @@ REST_FRAMEWORK = {
 
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:3000',  # React dev server
+    'http://127.0.0.1:3000',
 ]
+
+
+# CELERY_BROKER_URL = 'redis://localhost:16379/0'
+# CELERY_RESULT_BACKEND = 'django-db'
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'redis://localhost:16379/1',
+#     }
+# }
+
+# celery setting.
+CELERY_BROKER_URL = 'redis://localhost:16379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:16379/0'

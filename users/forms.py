@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, CharField, TextInput, Form, PasswordInput
+from django.forms import ModelForm, CharField, TextInput, Form, PasswordInput, EmailField
 
 
 class LoginUserForm(Form):
@@ -19,20 +19,37 @@ class LoginUserForm(Form):
 
 
 class UserRegistrationForm(UserCreationForm):
+    first_name = CharField(label='First Name', widget=TextInput(attrs={
+        'class': "col-lg-9",
+        'placeholder': "First Name"}))
+    last_name = CharField(label='Last Name', widget=TextInput(attrs={
+        'class': "col-lg-9",
+        'placeholder': "Last Name"}))
+
+    email = forms.EmailField(required=True)
+
     username = CharField(label='Username', widget=TextInput(attrs={
         'class': "col-lg-9",
         'placeholder': "Username"}))
+
     password1 = CharField(label='Password', widget=PasswordInput(attrs={
         'class': "col-lg-9",
         'placeholder': "Password"}))
+
     password2 = CharField(label='Password', widget=PasswordInput(attrs={
         'class': "col-lg-9",
         'placeholder': "Repeat password"}))
 
     class Meta:
         model = get_user_model()
-        fields = ('username', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
         widgets = {
+            'first_name': TextInput(attrs={
+                'class': "col-lg-9",
+                'placeholder': "First Name"}),
+            'last_name': TextInput(attrs={
+                'class': "col-lg-9",
+                'placeholder': "Last Name"}),
             'username': TextInput(attrs={
                 'class': "col-lg-9",
                 'placeholder': "Username"}),

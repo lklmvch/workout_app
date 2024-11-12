@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
+from rest_framework.response import Response
 from rest_framework import serializers
 import re
 
-from .models import Course, Registration, UserContacts
+from .models import Course, UserContacts, Registration
 from .models import Image
 
 
@@ -21,16 +23,16 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class RegistrationSerializer(serializers.Serializer):
+
     first_name = serializers.CharField(max_length=100)
     last_name = serializers.CharField(max_length=100)
     email = serializers.EmailField()
     phone_number = serializers.CharField(max_length=13)  # Example: +375XXXXXXXXX (13 characters)
 
-    # Field-level validation for email is already handled by EmailField
     # We will add custom validation for the phone_number field
-    # course = serializers.SlugRelatedField(slug_field='name', read_only=True)
-
     course = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all())
+
+
     class Meta:
         model = Registration
         fields = ['first_name', 'last_name', 'email', 'phone_number']
@@ -59,6 +61,6 @@ class RegistrationSerializer(serializers.Serializer):
             phone_number=validated_data['phone_number'],
             course=validated_data['course']
         )
-        return registration
 
+        return registration
 

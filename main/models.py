@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from users.models import Trainers
 import datetime
@@ -24,6 +25,8 @@ class Image(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    # user = models.ManyToManyField(User, blank=True, related_name='courses')
+
     trainer = models.ForeignKey(
          Trainers,
          related_name='Trainers',
@@ -50,5 +53,5 @@ class Registration(models.Model):
     registered_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.course.name
+        return f"{self.first_name} {self.last_name} - {self.course.name}"
 

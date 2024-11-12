@@ -1,6 +1,9 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 
+from .forms import UserRegistrationForm
 from .serializers import UserRegistrationSerializer
 
 import random
@@ -9,11 +12,20 @@ from rest_framework.views import APIView
 from rest_framework import status
 # from workout_app.tasks import send_confirmation_email
 
+from django.views.generic.edit import CreateView
+
 
 class LoginUser(LoginView):
     form_class = AuthenticationForm
     template_name = 'users/login.html'
     extra_context = {'title': 'Authorisation'}
+
+
+class SignUpView(SuccessMessageMixin, CreateView):
+  template_name = 'users/register.html'
+  form_class = UserRegistrationForm
+  success_url = reverse_lazy('users:login')
+  success_message = "Your profile was created successfully"
 
 
 class UserRegistrationView(APIView):
