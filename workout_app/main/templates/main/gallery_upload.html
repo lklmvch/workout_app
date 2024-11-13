@@ -1,0 +1,232 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block title %}Gallery{% endblock %}
+{% block content %}
+
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg spad" data-setbg="{% static 'main/img/about-bread.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>Upload a photo</h2>
+                        <div class="breadcrumb-controls">
+                            <a href="#"><i class="fa fa-home"></i> Upload a photo</a>
+                            <span>Upload a photo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb End -->
+<div class="contact-section">
+<div class="container">
+                <div class="registration-form" align="center">
+                    <h1 align='center' style="color:White">Please, upload a photo</h1><br>
+                    <br>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-error" style="color:White" > {{ form.non_field_error }}
+                            <br>
+                            {{ form.as_p }}
+                            {% csrf_token %}
+                            <button type="submit" class="c-btn">Upload</button>
+                        </div>
+                    </form>
+
+                </div>
+</div>
+</div>
+
+<!--    &lt;!&ndash; Gallery Section Begin &ndash;&gt;-->
+<!--    <section class="gallery-section spad">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-lg-12">-->
+<!--                    <div class="gallery-controls">-->
+<!--                        <ul>-->
+<!--                            <li class="active" data-filter="*">All GALLERY</li>-->
+<!--                            <li data-filter=".crossfit">Crossfit</li>-->
+<!--                            <li data-filter=".workout">Workout</li>-->
+<!--                            <li data-filter=".gym">GYM</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row gallery-filter">-->
+<!--                <div class="col-lg-4 col-sm-6 mix crossfit workout">-->
+<!--                    <div class="gallery-item">-->
+<!--                        <img src="{% static 'main/img/gallery/gallery-1.jpg' %}" alt="">-->
+<!--                        <div class="gi-hover-warp">-->
+<!--                            <div class="gi-hover">-->
+<!--                                <a href="{% static 'main/img/gallery/gallery-1.jpg' %}" class="image-popup"><i class="fa fa-search-plus"></i></a>-->
+<!--                                <a href="#"><i class="fa fa-chain"></i></a>-->
+<!--                                <h6>Time to Try a Bodyweight Workout <span>Run, Walk, Swimming</span></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4 col-sm-6 mix workout gym">-->
+<!--                    <div class="gallery-item">-->
+<!--                        <img src="{% static 'main/img/gallery/gallery-2.jpg' %}" alt="">-->
+<!--                        <div class="gi-hover-warp">-->
+<!--                            <div class="gi-hover">-->
+<!--                                <a href="{% static 'main/img/gallery/gallery-2.jpg' %}" class="image-popup"><i class="fa fa-search-plus"></i></a>-->
+<!--                                <a href="#"><i class="fa fa-chain"></i></a>-->
+<!--                                <h6>Time to Try a Bodyweight Workout <span>Run, Walk, Swimming</span></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4 col-sm-6 mix workout">-->
+<!--                    <div class="gallery-item">-->
+<!--                        <img src="{% static 'main/img/gallery/gallery-3.jpg' %}" alt="">-->
+<!--                        <div class="gi-hover-warp">-->
+<!--                            <div class="gi-hover">-->
+<!--                                <a href="{% static 'main/img/gallery/gallery-3.jpg' %}" class="image-popup"><i class="fa fa-search-plus"></i></a>-->
+<!--                                <a href="#"><i class="fa fa-chain"></i></a>-->
+<!--                                <h6>Time to Try a Bodyweight Workout <span>Run, Walk, Swimming</span></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4 col-sm-6 mix gym">-->
+<!--                    <div class="gallery-item">-->
+<!--                        <img src="{% static 'main/img/gallery/gallery-4.jpg' %}" alt="">-->
+<!--                        <div class="gi-hover-warp">-->
+<!--                            <div class="gi-hover">-->
+<!--                                <a href="{% static 'main/' %}img/gallery/gallery-4.jpg" class="image-popup"><i-->
+<!--                                        class="fa fa-search-plus"></i></a>-->
+<!--                                <a href="#"><i class="fa fa-chain"></i></a>-->
+<!--                                <h6>Time to Try a Bodyweight Workout <span>Run, Walk, Swimming</span></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4 col-sm-6 mix crossfit">-->
+<!--                    <div class="gallery-item">-->
+<!--                        <img src="{% static 'main/img/gallery/gallery-5.jpg' %}" alt="">-->
+<!--                        <div class="gi-hover-warp">-->
+<!--                            <div class="gi-hover">-->
+<!--                                <a href="{% static 'main/img/gallery/gallery-5.jpg' %}" class="image-popup"><i class="fa fa-search-plus"></i></a>-->
+<!--                                <a href="#"><i class="fa fa-chain"></i></a>-->
+<!--                                <h6>Time to Try a Bodyweight Workout <span>Run, Walk, Swimming</span></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4 col-sm-6 mix gym crossfit">-->
+<!--                    <div class="gallery-item">-->
+<!--                        <img src="{% static 'main/img/gallery/gallery-6.jpg' %}" alt="">-->
+<!--                        <div class="gi-hover-warp">-->
+<!--                            <div class="gi-hover">-->
+<!--                                <a href="{% static 'main/img/gallery/gallery-6.jpg' %}" class="image-popup"><i-->
+<!--                                        class="fa fa-search-plus"></i></a>-->
+<!--                                <a href="#"><i class="fa fa-chain"></i></a>-->
+<!--                                <h6>Time to Try a Bodyweight Workout <span>Run, Walk, Swimming</span></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4 col-sm-6 mix workout">-->
+<!--                    <div class="gallery-item">-->
+<!--                        <img src="{% static 'main/img/gallery/gallery-7.jpg' %}" alt="">-->
+<!--                        <div class="gi-hover-warp">-->
+<!--                            <div class="gi-hover">-->
+<!--                                <a href="img/gallery/gallery-7.jpg" class="image-popup"><i-->
+<!--                                        class="fa fa-search-plus"></i></a>-->
+<!--                                <a href="#"><i class="fa fa-chain"></i></a>-->
+<!--                                <h6>Time to Try a Bodyweight Workout <span>Run, Walk, Swimming</span></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4 col-sm-6 mix crossfit gym">-->
+<!--                    <div class="gallery-item">-->
+<!--                        <img src="{% static 'main/img/gallery/gallery-8.jpg' %}" alt="">-->
+<!--                        <div class="gi-hover-warp">-->
+<!--                            <div class="gi-hover">-->
+<!--                                <a href="{% static 'main/img/gallery/gallery-8.jpg' %}" class="image-popup"><i-->
+<!--                                        class="fa fa-search-plus"></i></a>-->
+<!--                                <a href="#"><i class="fa fa-chain"></i></a>-->
+<!--                                <h6>Time to Try a Bodyweight Workout <span>Run, Walk, Swimming</span></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4 col-sm-6 mix crossfit gym workout">-->
+<!--                    <div class="gallery-item">-->
+<!--                        <img src="{% static 'main/img/gallery/gallery-9.jpg' %}" alt="">-->
+<!--                        <div class="gi-hover-warp">-->
+<!--                            <div class="gi-hover">-->
+<!--                                <a href="{% static 'main/img/gallery/gallery-9.jpg' %}" class="image-popup"><i-->
+<!--                                        class="fa fa-search-plus"></i></a>-->
+<!--                                <a href="#"><i class="fa fa-chain"></i></a>-->
+<!--                                <h6>Time to Try a Bodyweight Workout <span>Run, Walk, Swimming</span></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!-- Gallery Section End -->
+
+    <!-- Cta Section Begin -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cta-text">
+                        <h3>GeT Started Today</h3>
+                        <p>New student special! $30 unlimited Gym for the first week anh 50% of our member!</p>
+                    </div>
+                    <a href="#" class="primary-btn cta-btn">book now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Cta Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-logo-item">
+                        <div class="f-logo">
+                            <a href="#"><img src="{% static 'main/img/logo.png' %}" alt=""></a>
+                        </div>
+                        <p>Despite growth of the Internet over the past seven years, the use of toll-free phone numbers
+                            in television advertising continues.</p>
+                        <div class="social-links">
+                            <h6>Follow us</h6>
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-google-plus"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Our Blog</h5>
+                        <div class="footer-blog">
+                            <a href="#" class="fb-item">
+                                <h6>Most people who work</h6>
+                                <span class="blog-time"><i class="fa fa-clock-o"></i> Jan 02, 2019</span>
+                            </a>
+                            <a href="#" class="fb-item">
+                                <h6>Freelance Design Tricks How </h6>
+                                <span class="blog-time"><i class="fa fa-clock-o"></i> Jan 02, 2019</span>
+                            </a>
+                            <a href="#" class="fb-item">
+                                <h6>have a computer at home have had </h6>
+                                <span class="blog-time"><i class="fa fa-clock-o"></i> Jan 02, 2019</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}

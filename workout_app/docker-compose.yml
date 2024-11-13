@@ -1,0 +1,44 @@
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy  # Wait for the db service to be healthy
+    environment:
+      - POSTGRES_DB=workout_database
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root12345
+      - DB_HOST=db
+      - DB_PORT=5432
+    networks:
+      - app_network
+
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=workout_database
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root12345
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root"]  # Checks if PostgreSQL is ready
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  app_network:
